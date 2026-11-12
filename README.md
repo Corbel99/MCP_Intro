@@ -101,6 +101,26 @@ python3 server/learning_server.py
 The FastMCP banner appears, then the server waits for a client to connect:
 this is normal. Stop it with `Ctrl + C`.
 
+## MCP Tools
+
+### `search_topics(query: str)`
+
+Searches the topics by **title** and **key concepts** (case-insensitive) and
+returns a short summary of each matching topic: `id`, `title` and `summary`.
+Returns an empty list if nothing matches.
+
+Example: `search_topics("decorator")` returns:
+
+```json
+[
+  {
+    "id": "python-decorators",
+    "title": "Python Decorators",
+    "summary": "A decorator is a function that wraps another function to add behavior without changing its code. It is applied with the @decorator syntax."
+  }
+]
+```
+
 ## Author
 
 Thomas
