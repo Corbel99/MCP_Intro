@@ -57,6 +57,29 @@ capabilities a server exposes, the less damage a wrong call can do.
 A learning server only needs to read topics: it has no reason to write,
 delete or access other files.
 
+### Comparison with my previous project
+
+In my previous project (AI agents with Google ADK), the tools were Python
+functions stored inside the project and imported directly by `main.py`:
+
+```text
+main.py ── direct import ──► tools/file_writer.py, tools/validation.py
+```
+
+Only my own program could use them. With MCP, the tools are still Python
+functions, but they live in a separate server. The agent does not import
+them: it asks the server through MCP.
+
+```text
+agent.py (host) ── client ── MCP ──► learning_server.py (server)
+```
+
+| | Previous project | MCP project |
+|---|---|---|
+| Where are the tools? | Inside the project | In a server |
+| How does the agent use them? | Direct import | Request through MCP |
+| Who can use them? | Only my program | Any compatible host |
+
 ## Setup
 
 _Coming soon._
