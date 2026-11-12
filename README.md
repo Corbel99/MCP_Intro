@@ -12,7 +12,7 @@ mcp-intro/
 │   ├── learning_server.py   # FastMCP server (tools and resources)
 │   └── __init__.py
 ├── client/
-│   ├── mcp_client.py        # Client that connects to the server
+│   ├── mcp_client.py        # Test client that checks the server
 │   ├── agent.py             # Agent that uses the server
 │   └── __init__.py
 ├── data/
@@ -40,8 +40,8 @@ Example used in this project: an agent wants information about
   Here, it is the agent (`client/agent.py`): it receives the student's
   question and decides when to use the server.
 - **MCP client**: the connection between the host and one MCP server.
-  A host creates one client per server. Here, `client/mcp_client.py`
-  connects to the learning server.
+  A host creates one client per server. Here, the agent uses the FastMCP
+  `Client`, and `client/mcp_client.py` uses one to test the server.
 - **MCP server**: the program that exposes capabilities. Here,
   `server/learning_server.py` exposes the programming topics.
 
@@ -193,6 +193,59 @@ JSON string, with only the `id` and `title` of each topic:
 Tools are **actions** called with parameters; resources are **documents**
 that are only read. The catalog never changes and takes no parameter, so it
 is exposed as a resource.
+
+## Agent
+
+`client/agent.py` is an **agent-like client**: deterministic code, without a
+language model. It uses the MCP server as an external capability and never
+imports the server functions directly.
+
+```bash
+python3 client/agent.py
+```
+
+1. It asks for a topic (press Enter to use `decorators`).
+2. It starts the server and connects to it with the FastMCP `Client`
+   (stdio transport).
+3. It calls `search_topics` through MCP, then `get_topic_details` on the
+   first result.
+4. It writes a student-facing answer (recommended topic, why it is relevant,
+   prerequisites, key concepts, practice idea, common mistakes) and saves it
+   in `output/sample_agent_response.md`.
+
+If no topic matches, it reads the `topics://catalog` resource and lists the
+available topics. An LLM-based agent (for example with Google ADK and
+`McpToolset`) would also work, but a deterministic client was chosen to keep
+the focus on the MCP integration and to get the same result every time.
+
+## Third-Party MCP Server Review
+
+I reviewed the official **Filesystem MCP server**
+(`@modelcontextprotocol/server-filesystem`), one of the reference servers of
+the MCP project. The review was done through its documentation only: I did
+not install or run it.
+
+| Question | Answer |
+|---|---|
+| What does it do? | Gives an AI application access to files on the computer: read, write, search, list and move files and directories. |
+| Local or remote? | **Local.** The client starts it on the user's machine with `npx` or Docker. |
+| Tools | 13 tools. **Read-only:** `read_text_file`, `read_media_file`, `read_multiple_files`, `list_directory`, `list_directory_with_sizes`, `directory_tree`, `search_files`, `get_file_info`, `list_allowed_directories`. **Write:** `create_directory`, `write_file`, `edit_file`, `move_file`. |
+| Resources | None mentioned in the documentation. |
+| Permissions or credentials | No API key or password. It requires a list of **allowed directories** (command-line arguments, MCP Roots, or Docker mounts). All operations are restricted to these directories. |
+
+**One risk:** the write tools can change files. `write_file` overwrites
+existing files, so a wrong call from the AI (a model can hallucinate) could
+destroy important data. The more directories are allowed, the bigger the
+possible damage.
+
+**One safety measure:** allow only **one dedicated test directory**, never the
+home directory or the whole disk. With Docker, mount it **read-only** (`ro`)
+so the server can read but not modify anything. For `edit_file`, use its
+`dryRun` option first to preview the changes.
+
+**What I checked before using it:** the README, the list of tools and which
+ones can modify files, the required permissions, and how to limit the
+allowed directories.
 
 ## Author
 
