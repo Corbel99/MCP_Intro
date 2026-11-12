@@ -25,9 +25,37 @@ mcp-intro/
 └── .gitignore
 ```
 
-## MCP architecture
+## MCP Architecture Summary
 
-_Coming soon._
+**MCP (Model Context Protocol)** is a standard way to connect an AI
+application to external capabilities. Instead of writing a custom
+integration for every tool, a program exposes its capabilities through an
+MCP server, and any compatible application can discover and use them.
+It works like a universal plug between AI agents and tools.
+
+Example used in this project: an agent wants information about
+`Python decorators`, so it asks the learning server.
+
+- **MCP host**: the AI application that manages the whole interaction.
+  Here, it is the agent (`client/agent.py`): it receives the student's
+  question and decides when to use the server.
+- **MCP client**: the connection between the host and one MCP server.
+  A host creates one client per server. Here, `client/mcp_client.py`
+  connects to the learning server.
+- **MCP server**: the program that exposes capabilities. Here,
+  `server/learning_server.py` exposes the programming topics.
+
+The server can expose:
+
+- **Tools**: actions that can be called with parameters, like functions.
+  Example: search the topics that match `decorators`.
+- **Resources**: read-only data that can be consulted but not modified.
+  Example: the catalog of available topics.
+
+**Why expose only what is needed?** An agent can make mistakes. The fewer
+capabilities a server exposes, the less damage a wrong call can do.
+A learning server only needs to read topics: it has no reason to write,
+delete or access other files.
 
 ## Setup
 
