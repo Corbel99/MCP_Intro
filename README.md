@@ -121,6 +121,21 @@ Example: `search_topics("decorator")` returns:
 ]
 ```
 
+### `get_topic_details(topic_id: str)`
+
+Returns the **full information** for one topic, using its exact `id`
+(found with `search_topics`): title, summary, prerequisites, key concepts,
+common mistakes and practice idea.
+
+If the id does not exist, it returns a clear error instead of crashing:
+
+```json
+{"error": "Topic 'sushi' not found. Use search_topics to find a valid id."}
+```
+
+The two tools work together: `search_topics` finds the candidates,
+then `get_topic_details` retrieves the full topic.
+
 ## Author
 
 Thomas

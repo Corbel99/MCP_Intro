@@ -54,6 +54,24 @@ def search_topics(query: str) -> list[dict]:
 
     return results
 
+@mcp.tool
+def get_topic_details(topic_id: str) -> dict:
+    """Return full information for a topic by id.
+
+    Return an error message if the id does not exist.
+    """
+    # On nettoie l'id reçu (espaces, majuscules)
+    wanted_id = topic_id.strip().lower()
+
+    # On parcourt les fiches jusqu'à trouver le bon id
+    for topic in load_topics():
+        if topic["id"] == wanted_id:
+            # Trouvé : on renvoie la fiche complète
+            return topic
+
+    # Aucune fiche n'a cet id : message clair, sans planter
+    return {"error": f"Topic '{topic_id}' not found. Use search_topics to find a valid id."}
+
 
 # Point d'entrée : on lance le serveur seulement si on exécute ce fichier
 if __name__ == "__main__":
