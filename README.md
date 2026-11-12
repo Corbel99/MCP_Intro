@@ -82,11 +82,24 @@ agent.py (host) ── client ── MCP ──► learning_server.py (server)
 
 ## Setup
 
-_Coming soon._
+FastMCP requires **Python 3.10 or later** (developed with Python 3.12).
+
+```bash
+python3 -m venv venv --prompt mcp
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
 ## Usage
 
-_Coming soon._
+### Start the MCP server
+
+```bash
+python3 server/learning_server.py
+```
+
+The FastMCP banner appears, then the server waits for a client to connect:
+this is normal. Stop it with `Ctrl + C`.
 
 ## Author
 

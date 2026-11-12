@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "python-decorators",
+    "title": "Python Decorators",
+    "summary": "A decorator is a function that wraps another function to add behavior without changing its code. It is applied with the @decorator syntax.",
+    "prerequisites": ["Functions", "Scope", "Functions as arguments"],
+    "key_concepts": ["Higher-order functions", "Wrapper functions", "The @ syntax", "*args and **kwargs"],
+    "common_mistakes": [
+      "Forgetting to return the wrapper function",
+      "Calling the function instead of passing it to the decorator",
+      "Forgetting to return the result of the decorated function"
+    ],
+    "practice_idea": "Create a decorator that prints a message before and after a function call."
+  },
+  {
+    "id": "python-list-comprehensions",
+    "title": "Python List Comprehensions",
+    "summary": "A list comprehension builds a new list from another iterable in a single, readable line, optionally filtering the elements.",
+    "prerequisites": ["Lists", "for loops", "Conditions"],
+    "key_concepts": ["Expression and loop in one line", "Filtering with if", "Readability"],
+    "common_mistakes": [
+      "Writing comprehensions that are too long to read",
+      "Putting the if condition in the wrong place",
+      "Using a comprehension only for its side effects"
+    ],
+    "practice_idea": "From a list of numbers, build a list containing the squares of the even numbers only."
+  },
+  {
+    "id": "python-virtual-environments",
+    "title": "Python Virtual Environments",
+    "summary": "A virtual environment is a folder with its own Python and libraries, so each project keeps its dependencies separate.",
+    "prerequisites": ["Terminal basics", "pip"],
+    "key_concepts": ["python3 -m venv", "Activating with source", "requirements.txt", "One venv per project"],
+    "common_mistakes": [
+      "Installing packages without activating the venv",
+      "Committing the venv folder to Git",
+      "Forgetting to update requirements.txt"
+    ],
+    "practice_idea": "Create a venv, install one library, save it in requirements.txt, then recreate the environment from that file."
+  },
+  {
+    "id": "c-pointers",
+    "title": "C Pointers",
+    "summary": "A pointer is a variable that stores the memory address of another variable. It lets functions modify data and work with arrays and dynamic memory.",
+    "prerequisites": ["C variables and types", "Functions in C"],
+    "key_concepts": ["The & operator (address)", "The * operator (dereference)", "NULL", "Pointers and arrays"],
+    "common_mistakes": [
+      "Dereferencing a NULL or uninitialized pointer",
+      "Confusing the pointer with the value it points to",
+      "Returning the address of a local variable"
+    ],
+    "practice_idea": "Write a swap function that exchanges the values of two integers using pointers."
+  },
+  {
+    "id": "recursion",
+    "title": "Recursion",
+    "summary": "A recursive function solves a problem by calling itself on a smaller version of the same problem until it reaches a base case.",
+    "prerequisites": ["Functions", "Conditions"],
+    "key_concepts": ["Base case", "Recursive case", "Call stack"],
+    "common_mistakes": [
+      "Forgetting the base case, which causes infinite recursion",
+      "Not making the problem smaller at each call",
+      "Using recursion where a simple loop is clearer"
+    ],
+    "practice_idea": "Write a recursive function that returns the factorial of a number."
+  }
+]
