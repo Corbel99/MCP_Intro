@@ -101,6 +101,43 @@ python3 server/learning_server.py
 The FastMCP banner appears, then the server waits for a client to connect:
 this is normal. Stop it with `Ctrl + C`.
 
+## Testing the Server
+
+The server can be tested without any agent, with the FastMCP test client:
+
+```bash
+python3 client/mcp_client.py
+```
+
+The client starts the server itself (stdio transport) and checks, one at a
+time:
+
+- the server starts;
+- the tools and the resource are listed;
+- `search_topics` with a matching query and a query with no match;
+- `get_topic_details` with a valid id and an invalid id;
+- the `topics://catalog` resource can be read.
+
+Sample output (shortened):
+
+```text
+== Tools ==
+- search_topics
+- get_topic_details
+
+== Resources ==
+- topics://catalog
+
+== search_topics('sushi') ==
+[]
+
+== get_topic_details('sushi') ==
+{'error': "Topic 'sushi' not found. Use search_topics to find a valid id."}
+```
+
+If the server fails to start, check that `data/topics.json` exists and is
+valid JSON (`python3 -m json.tool data/topics.json`).
+
 ## MCP Tools
 
 ### `search_topics(query: str)`
