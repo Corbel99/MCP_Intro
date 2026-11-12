@@ -54,6 +54,7 @@ def search_topics(query: str) -> list[dict]:
 
     return results
 
+
 @mcp.tool
 def get_topic_details(topic_id: str) -> dict:
     """Return full information for a topic by id.
@@ -71,6 +72,21 @@ def get_topic_details(topic_id: str) -> dict:
 
     # Aucune fiche n'a cet id : message clair, sans planter
     return {"error": f"Topic '{topic_id}' not found. Use search_topics to find a valid id."}
+
+
+@mcp.resource("topics://catalog")
+def get_topic_catalog() -> str:
+    """Return the list of available topic ids and titles."""
+    # On prépare un catalogue compact : seulement l'id et le titre
+    catalog = []
+    for topic in load_topics():
+        catalog.append({
+            "id": topic["id"],
+            "title": topic["title"],
+        })
+
+    # On convertit la liste Python en texte JSON
+    return json.dumps(catalog, indent=2)
 
 
 # Point d'entrée : on lance le serveur seulement si on exécute ce fichier

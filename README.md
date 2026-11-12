@@ -136,6 +136,27 @@ If the id does not exist, it returns a clear error instead of crashing:
 The two tools work together: `search_topics` finds the candidates,
 then `get_topic_details` retrieves the full topic.
 
+## MCP Resources
+
+### `topics://catalog`
+
+A **read-only** resource that returns the catalog of available topics as a
+JSON string, with only the `id` and `title` of each topic:
+
+```json
+[
+  {"id": "python-decorators", "title": "Python Decorators"},
+  {"id": "python-list-comprehensions", "title": "Python List Comprehensions"},
+  {"id": "python-virtual-environments", "title": "Python Virtual Environments"},
+  {"id": "c-pointers", "title": "C Pointers"},
+  {"id": "recursion", "title": "Recursion"}
+]
+```
+
+Tools are **actions** called with parameters; resources are **documents**
+that are only read. The catalog never changes and takes no parameter, so it
+is exposed as a resource.
+
 ## Author
 
 Thomas
